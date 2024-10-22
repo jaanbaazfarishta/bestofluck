@@ -1,3 +1,5 @@
+// app/atable/page.js
+
 import AdminTable from '@/app/components/ui/adminTable'
 import React from 'react'
 

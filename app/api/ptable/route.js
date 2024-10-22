@@ -1,4 +1,4 @@
-// app/api/ptable/rote.s
+// app/api/ptable/route.js
 
 import Game from '@/models/Game';
 import connectToDatabase from '@/lib/db';
