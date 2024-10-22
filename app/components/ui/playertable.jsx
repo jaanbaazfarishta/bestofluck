@@ -7,11 +7,21 @@ export default function PlayerTable() {
   const { data: session } = useSession(); // Get the session data
   const [gameData, setGameData] = useState([]); // State to hold the game data
 
-  // Function to fetch game data based on session email
+  const adminEmail = "jaanbaazfarishta@gmail.com"; // Replace with actual admin email
+
+  // Function to fetch game data
   const fetchGameData = async () => {
     if (session?.user?.email) {
       try {
-        const response = await fetch(`/api/ptable?email=${session.user.email}`);
+        let response;
+        
+        // If admin, fetch all data; else fetch based on user email
+        if (session.user.email === adminEmail) {
+          response = await fetch(`/api/ptable`); // Fetch all players' data for admin
+        } else {
+          response = await fetch(`/api/ptable?email=${session.user.email}`); // Fetch data for logged-in user
+        }
+
         const data = await response.json();
 
         if (response.ok) {
@@ -42,8 +52,8 @@ export default function PlayerTable() {
   }, {});
 
   return (
-    <div className='sm:hidden'>
-      <h3>Your Numbers</h3>
+    <div className='sm:hidden overflow-scroll'>
+      <h3>{session?.user?.email === adminEmail ? "All Players' Numbers" : "Your Numbers"}</h3> {/* Show appropriate heading */}
       <table className='GuessTable'>
         <thead>
           <tr className='bg-rose-600'>
