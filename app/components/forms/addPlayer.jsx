@@ -59,7 +59,7 @@ export default function AddPlayer() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 text-black py-2 border rounded"
               placeholder="Player Name"
             />
           </div>
@@ -71,7 +71,7 @@ export default function AddPlayer() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 text-black border rounded"
               placeholder="Email"
             />
           </div>

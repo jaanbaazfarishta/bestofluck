@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react'; // For fetching session data
-import AdminTable from './adminTable'; // Import AdminTable to use it
 
 export default function PlayerTable() {
   const { data: session } = useSession(); // Get the session data
@@ -75,9 +74,6 @@ export default function PlayerTable() {
           </tr>
         </tbody>
       </table>
-
-      {/* If admin, render the AdminTable component and pass the data */}
-      {isAdmin && <AdminTable data={pointsMap} />}
     </div>
   );
 }
