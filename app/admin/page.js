@@ -19,7 +19,7 @@ export default async function Admin() {
         <div className='sm:hidden p-4'>
             <h1 className='text-center'>Admin Dashboard</h1>
             <p className='my-2'>Welcome, {session.user.name}! You can manage the game here.</p>
-            <Link className='bg-rose-500 py-1 px-2 my-2' href="/admin/atable">View Chart</Link>
+            <a className='bg-rose-500 py-1 px-2 my-2' href="/atable">View Chart</a>
             {/* Links */}
             <div className='flex justify-between items-center p-5 border m-2'>
                 <Link className='border p-2' href="/admin/player">Player</Link>
