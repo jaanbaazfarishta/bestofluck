@@ -32,7 +32,6 @@ export default function Game() {
         { start: 20 * 60, end: 20 * 60 + 50 },   // 08:00 - 08:50
         { start: 21 * 60, end: 21 * 60 + 50 },   // 09:00 - 09:50
         { start: 22 * 60, end: 22 * 60 + 50 },   // 10:00 - 10:50
-        { start: 23 * 60, end: 23 * 60 + 50 },   // 11:00 - 11:50
       ];
 
       // Check if the current time is within any of the visible intervals
