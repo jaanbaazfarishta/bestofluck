@@ -16,6 +16,8 @@ export default function Game() {
       const currentTime = hours * 60 + minutes; // Time in total minutes
 
       const visibleIntervals = [
+        { start: 9 * 60, end: 9 * 60 + 50 },   // 09:00 - 09:50
+        { start: 10 * 60, end: 10 * 60 + 50 },   // 10:00 - 10:50
         { start: 11 * 60, end: 11 * 60 + 50 },   // 11:00 - 11:50
         { start: 12 * 60, end: 12 * 60 + 50 },   // 12:00 - 12:50
         { start: 13 * 60, end: 13 * 60 + 50 },   // 01:00 - 01:50

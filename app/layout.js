@@ -47,7 +47,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`bg-stone-800 ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`bg-[#FDCDCB] ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Banner />
         <Navbar />

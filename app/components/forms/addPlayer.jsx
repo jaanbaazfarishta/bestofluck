@@ -67,7 +67,7 @@ export default function AddPlayer() {
           <div className="">
             <label className="text-white" htmlFor="email">Email</label>
             <input
-            type='mail'
+            type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}

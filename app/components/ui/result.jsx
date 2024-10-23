@@ -29,7 +29,7 @@ export default function Result() {
 
     return (
         <div className="sm:hidden flex flex-col justify-center gap-2 items-center p-5">
-            <h1 className="text-center items-center text-9xl p-4 bg-green-600 border rounded">
+            <h1 className="text-center items-center text-9xl p-4 bg-[#D0EEEC] border rounded">
                 {numbers.length > 0 ? numbers[0].number : 'N/A'}
             </h1>
             <table className="mainTable">
@@ -43,7 +43,7 @@ export default function Result() {
                         {numbers.map((num, index) => (
                             <td
                                 key={index}
-                                className={index === 0 ? "bg-green-600 text-white" : ""} // Added class for the first column
+                                className={index === 0 ? "bg-[#D0EEEC] text-white" : ""} // Added class for the first column
                             >
                                 {num.number}
                             </td>

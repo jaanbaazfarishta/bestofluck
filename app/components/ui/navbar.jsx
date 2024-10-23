@@ -40,7 +40,7 @@ export default async function Navbar() {
               </ul>
             </details>
           </div>
-          <div className='border p-1 border-black rounded bg-rose-600'><SignOut /></div>
+          <div className='border p-1 border-black rounded bg-[#A9D7D5]'><SignOut /></div>
         </div>
       ) : (
         <div className='flex min-w-full p-4 justify-center items-center border-2'>
