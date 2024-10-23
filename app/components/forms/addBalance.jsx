@@ -11,6 +11,24 @@ export default function AddBalance() {
   });
   const [currentBalance, setCurrentBalance] = useState(null);
   const [totalBalance, setTotalBalance] = useState(0);
+  const [playerEmails, setPlayerEmails] = useState([]);
+
+  // Fetch player emails on component mount
+  useEffect(() => {
+    const fetchPlayerEmails = async () => {
+      try {
+        const response = await fetch('/api/player'); // Assuming you have an API endpoint to fetch all players
+        const data = await response.json();
+        if (response.ok) {
+          setPlayerEmails(data.map((player) => player.email)); // Extracting emails from the data
+        }
+      } catch (error) {
+        console.error('Error fetching player emails:', error);
+      }
+    };
+
+    fetchPlayerEmails();
+  }, []);
 
   // Fetch player's current balance when the email changes
   useEffect(() => {
@@ -84,15 +102,20 @@ export default function AddBalance() {
 
         <div>
           <label className="text-white" htmlFor="email">Player Email</label>
-          <input
-            type="email"
+          <select
             name="email"
             value={formData.email}
             onChange={handleChange}
             className="w-full text-black bg-rose-600 px-3 py-2 border rounded"
-            placeholder="Player Email"
             required
-          />
+          >
+            <option value="">Select Player Email</option>
+            {playerEmails.map((email, index) => (
+              <option key={index} value={email}>
+                {email}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Display current balance if found */}
@@ -132,7 +155,7 @@ export default function AddBalance() {
           />
         </div>
 
-        <button type="submit" className="text-white mt-3">Submit</button>
+        <button type="submit" className="mt-2 bg-rose-600 p-2 text-white mt-3">Submit</button>
       </form>
     </div>
   );

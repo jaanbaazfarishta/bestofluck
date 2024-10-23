@@ -1,8 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react'; // Import NextAuth hook
 
 export default function AddBalance() {
+  const { data: session } = useSession(); // Get session data
+
   const [formData, setFormData] = useState({
     emailFrom: '',
     emailTo: '',
@@ -11,6 +14,30 @@ export default function AddBalance() {
   const [balanceFrom, setBalanceFrom] = useState(null);
   const [balanceTo, setBalanceTo] = useState(null);
   const [totalBalanceTo, setTotalBalanceTo] = useState(0);
+  const [allEmails, setAllEmails] = useState([]); // To store all player emails
+
+  // Fetch all player emails for the select dropdown
+  useEffect(() => {
+    const fetchAllEmails = async () => {
+      try {
+        const response = await fetch('/api/player'); // Assuming your API returns all players
+        const data = await response.json();
+        if (response.ok) {
+          setAllEmails(data.map(player => player.email));
+        }
+      } catch (error) {
+        console.error('Error fetching emails:', error);
+      }
+    };
+
+    fetchAllEmails();
+  }, []);
+
+  useEffect(() => {
+    if (session) {
+      setFormData({ ...formData, emailFrom: session.user.email });
+    }
+  }, [session]);
 
   // Fetch balance for both emailFrom and emailTo
   useEffect(() => {
@@ -111,7 +138,7 @@ export default function AddBalance() {
       if (responseFrom.ok && responseTo.ok) {
         alert('Balance transferred successfully!');
         setFormData({
-          emailFrom: '',
+          emailFrom: session.user.email, // Reset emailFrom to session email
           emailTo: '',
           balance: '',
         });
@@ -138,9 +165,9 @@ export default function AddBalance() {
             type="email"
             name="emailFrom"
             value={formData.emailFrom}
-            onChange={handleChange}
+            readOnly
             className="w-full text-black bg-rose-600 px-3 py-2 border rounded"
-            placeholder="Player Email (From)"
+            placeholder="Your Email"
             required
           />
         </div>
@@ -159,16 +186,21 @@ export default function AddBalance() {
         )}
 
         <div>
-          <label className="text-white" htmlFor="emailTo">His Email</label>
-          <input
-            type="email"
+          <label className="text-white" htmlFor="emailTo">Select Player Email (To)</label>
+          <select
             name="emailTo"
             value={formData.emailTo}
             onChange={handleChange}
             className="w-full text-black bg-rose-600 px-3 py-2 border rounded"
-            placeholder="Player Email (To)"
             required
-          />
+          >
+            <option value="" disabled>Select Player Email</option>
+            {allEmails.map((email) => (
+              <option key={email} value={email}>
+                {email}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Display current balance for emailTo */}
