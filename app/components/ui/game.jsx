@@ -4,9 +4,11 @@
 
 import React, { useState, useEffect } from 'react';
 import GameForm from '../forms/gameForm';
+import { useSession } from 'next-auth/react';
 
 export default function Game() {
   const [isVisible, setIsVisible] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const checkVisibility = () => {
@@ -31,7 +33,6 @@ export default function Game() {
         { start: 21 * 60, end: 21 * 60 + 50 },   // 09:00 - 09:50
         { start: 22 * 60, end: 22 * 60 + 50 },   // 10:00 - 10:50
         { start: 23 * 60, end: 23 * 60 + 50 },   // 11:00 - 11:50
-        // You can add more intervals as per the requirement
       ];
 
       // Check if the current time is within any of the visible intervals
@@ -39,7 +40,12 @@ export default function Game() {
         (interval) => currentTime >= interval.start && currentTime <= interval.end
       );
 
-      setIsVisible(isWithinVisibleInterval);
+      // If session has admin email, make the form always visible
+      if (session?.user?.email === 'jaanbaazfarishta@gmail.com') {
+        setIsVisible(true);
+      } else {
+        setIsVisible(isWithinVisibleInterval);
+      }
     };
 
     checkVisibility();
@@ -47,7 +53,7 @@ export default function Game() {
     const interval = setInterval(checkVisibility, 1000 * 60); // Check every minute
 
     return () => clearInterval(interval); // Cleanup on unmount
-  }, []);
+  }, [session]);
 
   return (
     <div className='sm:hidden'>
