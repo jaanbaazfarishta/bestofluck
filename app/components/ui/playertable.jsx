@@ -30,7 +30,6 @@ export default function PlayerTable() {
           // Combine all game data for summing the points
           const combinedData = data.flatMap(game => game.selectedNumbers); // Get selectedNumbers from each game document
           setGameData(combinedData);
-          console.log(combinedData);
         } else {
           console.error("Failed to fetch game data");
         }
