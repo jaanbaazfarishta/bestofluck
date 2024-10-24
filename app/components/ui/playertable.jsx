@@ -15,7 +15,7 @@ export default function PlayerTable() {
     if (session?.user?.email) {
       try {
         let response;
-        
+
         // If admin, fetch all data; else fetch based on user email
         if (session.user.email === adminEmail) {
           response = await fetch(`/api/ptable`); // Fetch all players' data for admin
@@ -30,6 +30,7 @@ export default function PlayerTable() {
           // Combine all game data for summing the points
           const combinedData = data.flatMap(game => game.selectedNumbers); // Get selectedNumbers from each game document
           setGameData(combinedData);
+          console.log(combinedData);
         } else {
           console.error("Failed to fetch game data");
         }
@@ -46,9 +47,13 @@ export default function PlayerTable() {
   // Create an object to sum points for each number
   const pointsMap = gameData.reduce((acc, entry) => {
     if (acc[entry.number]) {
-      acc[entry.number] += entry.points; // Sum the points for the same number
+      acc[entry.number].points += entry.points; // Sum the points for the same number
+      acc[entry.number].returningPoints += entry.returningPoints; // Sum the returningPoints for the same number
     } else {
-      acc[entry.number] = entry.points; // Initialize the points for the number
+      acc[entry.number] = { 
+        points: entry.points, 
+        returningPoints: entry.returningPoints 
+      }; // Initialize the points and returningPoints for the number
     }
     return acc;
   }, {});
@@ -68,7 +73,14 @@ export default function PlayerTable() {
           <tr className='bg-amber-700'>
             {[...Array(10).keys()].map(num => (
               <td key={num + 1}>
-                {pointsMap[num + 1] || 0} {/* Show sum of points or 0 if number not selected */}
+                {pointsMap[num + 1]?.points || 0} {/* Show sum of points or 0 if number not selected */}
+              </td>
+            ))}
+          </tr>
+          <tr className='bg-green-500'>
+            {[...Array(10).keys()].map(num => (
+              <td key={num + 1}>
+                {pointsMap[num + 1]?.returningPoints || 0} {/* Show returning points or 0 if not available */}
               </td>
             ))}
           </tr>
